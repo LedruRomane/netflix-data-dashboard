@@ -7,17 +7,24 @@ import dash
 external_stylesheets = [dbc.themes.CERULEAN]
 app = Dash(__name__, use_pages=True, external_stylesheets=external_stylesheets)
 
+children = []
+
+for page in dash.page_registry.values():
+    children.append(dbc.NavItem(dbc.NavLink(f"{page['name']}", href=page["path"])))
+
+# Navbar 
+navbar = dbc.NavbarSimple(
+    children,
+    brand="Netflix Datas Analysis Dashboard",
+    brand_href="/",
+    sticky="top",
+)
+
 # App layout
 app.layout = dbc.Container([
     dbc.Row([
-        html.Div('Netflix Datas Analysis Dashboard', className="text-primary text-center fs-3")
+        navbar
     ]),
-
-    dbc.Row([
-            html.Div(dcc.Link(f"{page['name']} - {page['path']}", href=page["path"]))                
-            for page in dash.page_registry.values()
-            if page["module"] != "pages.not_found_404"
-    ]), html.Hr(),
     dash.page_container,
 ], fluid=True)
 
