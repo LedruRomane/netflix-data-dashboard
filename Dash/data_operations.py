@@ -1,6 +1,9 @@
 import pandas as pd
 import ast
 
+### DATA OPERATIONS ###
+
+# Function return cleaned data
 def get_data_title_cleaned(): 
     # Import data
     df_titles = pd.read_csv('./data/titles.csv')
@@ -16,22 +19,13 @@ def get_data_title_cleaned():
     df_title_cleaned['title'] = df_title_cleaned['title'].astype(str)
     df_title_cleaned['age_certification'] = df_title_cleaned['age_certification'].astype(str)
 
-    # Turn type column into boolean
-    df_title_cleaned['type'] = df_title_cleaned['type'].apply(lambda x: 1 if x == 'MOVIE' else 0)
-
-    # Remode imdb_id column
+    # Remode id column (not needed)
     df_title_cleaned.drop(columns=['imdb_id'], inplace=True)
+    df_title_cleaned.drop(columns=['id'], inplace=True)
 
     return df_title_cleaned
 
-def get_movie(df):
-    df = df[df['type'] == 1]
-    return df
-
-def get_tvshow(df):
-    df = df[df['type'] == 0]
-    return df
-
+# Function return list of genres existing in the dataset
 def get_unique_genres(df):
     unique_genres = set()
     df_genres = df.copy()
@@ -42,3 +36,12 @@ def get_unique_genres(df):
         unique_genres.update(genres_list)
 
     return sorted(list(unique_genres))
+
+# Getters
+def get_movie(df):
+    df = df[df['type'] == 'MOVIE']
+    return df
+
+def get_tvshow(df):
+    df = df[df['type'] == 'SHOW']
+    return df
