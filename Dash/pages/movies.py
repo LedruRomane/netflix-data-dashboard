@@ -5,13 +5,15 @@ import pandas as pd
 import plotly.express as px
 from data_operations import get_unique_genres, get_data_title_cleaned, get_movie
 
-# PAGE
+### PAGE ###
+
 dash.register_page(
     __name__,
-    path_template="/graph",
+    path_template="/movies",
 )
 
-# DATAS
+### DATAS ###
+
 data_title = get_data_title_cleaned()
 movies = get_movie(data_title)
 
@@ -21,7 +23,8 @@ movies_runtime = movies[['title', 'runtime', 'release_year', 'genres']]
 genres = get_unique_genres(data_title)
 genres.insert(0, 'all')
 
-# FORM
+### FORM COMPONENTS ###
+
 dropdownn_genres = html.Div([
     dcc.Dropdown(
         id='genre-dropdown',
@@ -40,14 +43,18 @@ radios_items = html.Div([
     )
 ])
 
-# LAYOUT
+### LAYOUT ###
+
 layout = dbc.Container([
     dbc.Row([
         dbc.Col([
-            html.H1('Graphique')
+            html.H1('FILMS'),
         ]),
-    ]),
+    ], style={'margin': '10px'}),
+
+    # Graph 1 : Durée moyenne des films par année
     dbc.Row([
+        html.H3('Durée moyenne des films par année'),
         html.Label('Genre de film :'),
         dbc.Col([
             dropdownn_genres
@@ -61,10 +68,17 @@ layout = dbc.Container([
             dcc.Graph(figure={}, id='graph')
         ], width=10),
     ]),
+
+    # Graph 2 : ?
+    dbc.Row([
+        html.H3('?'),
+    ]),
 ])
 
 
-# CALLBACKS
+### CALLBACKS ###
+
+# Graph 1 : Durée moyenne des films par année
 @callback(
     Output(component_id='graph', component_property='figure'),
     [Input(component_id='time', component_property='value'),
