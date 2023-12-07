@@ -5,4 +5,5 @@ dash.register_page(
     __name__,
     path_template="/",
 )
-layout = html.Div("HOME PAGE")
+
+layout = html.Div("Présentation des données")

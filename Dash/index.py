@@ -1,18 +1,13 @@
 # Import packages
-from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
 import dash
+from app import app
 
-# Initialize the app - incorporate a Dash Bootstrap theme
-external_stylesheets = [dbc.themes.CERULEAN]
-app = Dash(__name__, use_pages=True, external_stylesheets=external_stylesheets)
-
+# Dash pages
 children = []
-
 for page in dash.page_registry.values():
     children.append(dbc.NavItem(dbc.NavLink(f"{page['name']}", href=page["path"])))
 
-# Navbar 
 navbar = dbc.NavbarSimple(
     children,
     brand="Netflix Datas Analysis Dashboard",
@@ -30,4 +25,4 @@ app.layout = dbc.Container([
 
 # Run the app
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run_server(debug=True)
