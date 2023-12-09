@@ -3,22 +3,22 @@ from dash import Dash, html, dash_table, dcc, callback, Output, Input
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
-from data_operations import get_unique_genres, get_data_title_cleaned, get_movie
+from data_operations import get_tvshow, get_unique_genres, get_data_title_cleaned
 
 ### PAGE ###
 
 dash.register_page(
     __name__,
-    path_template="/movies",
+    path_template="/tvshow",
 )
 
 ### DATAS ###
 
 data_title = get_data_title_cleaned()
-movies = get_movie(data_title)
+tvshow = get_tvshow(data_title)
 
-# clean movies to get only runtime, years, genres
-movies_runtime = movies[['title', 'runtime', 'release_year', 'genres']]
+# clean tvshows to get only runtime, years, genres
+tvshow_runtime = tvshow[['title', 'runtime', 'release_year', 'genres']]
 
 genres = get_unique_genres(data_title)
 genres.insert(0, 'all')
@@ -27,7 +27,7 @@ genres.insert(0, 'all')
 default_dropdown_value = genres[0]
 dropdownn_genres = html.Div([
     dcc.Dropdown(
-        id='genre-dropdown',
+        id='genre-tvshow-dropdown',
         options=[{'label': genre, 'value': genre} for genre in genres],
         value=default_dropdown_value,
         clearable=False
@@ -39,7 +39,7 @@ radios_items = html.Div([
         options=[{"label": x, "value": x} for x in ['Tout afficher', 'Après 1980']],
         value='Tout afficher',
         inline=True,
-        id='time'
+        id='time-tvshow-radio'
     )
 ])
 
@@ -48,14 +48,14 @@ radios_items = html.Div([
 layout = dbc.Container([
     dbc.Row([
         dbc.Col([
-            html.H1('FILMS'),
+            html.H1('SERIES'),
         ]),
     ], style={'margin': '10px'}),
 
     # Graph 1 : Durée moyenne des films par année
     dbc.Row([
-        html.H3('Durée moyenne des films Netflix par année'),
-        html.Label('Genre de film :'),
+        html.H3('Durée moyenne d\'un épisode de séries Netflix par an'),
+        html.Label('Genre de la série :'),
         dbc.Col([
             dropdownn_genres
         ], width=3),
@@ -65,13 +65,13 @@ layout = dbc.Container([
     ]),
     dbc.Row([
         dbc.Col([
-            dcc.Graph(figure={}, id='graph')
+            dcc.Graph(figure={}, id='graph-tvshow')
         ], width=10),
     ]),
 
     # Graph 2 : ?
     dbc.Row([
-        html.H3('Genre de films Netflix les plus appréciés'),
+        html.H3('Genre de séries Netflix les plus appréciés'),
     ]),
 ])
 
@@ -80,15 +80,15 @@ layout = dbc.Container([
 
 # Graph 1 : Durée moyenne des films par année
 @callback(
-    Output(component_id='graph', component_property='figure'),
-    [Input(component_id='time', component_property='value'),
-     Input(component_id='genre-dropdown', component_property='value')]
+    Output(component_id='graph-tvshow', component_property='figure'),
+    [Input(component_id='time-tvshow-radio', component_property='value'),
+     Input(component_id='genre-tvshow-dropdown', component_property='value')]
 )
 def update_graph(col_chosen, selected_genre):
     if selected_genre != 'all':
-        filtered_data = movies_runtime[movies_runtime['genres'].apply(lambda x: selected_genre in x)]
+        filtered_data = tvshow_runtime[tvshow_runtime['genres'].apply(lambda x: selected_genre in x)]
     else:
-        filtered_data = movies_runtime
+        filtered_data = tvshow_runtime
 
     # Filtrer par année si nécessaire
     if col_chosen == 'Après 1980':
