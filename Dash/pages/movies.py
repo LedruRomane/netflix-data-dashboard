@@ -24,12 +24,12 @@ genres = get_unique_genres(data_title)
 genres.insert(0, 'all')
 
 ### FORM COMPONENTS ###
-
+default_dropdown_value = genres[0]
 dropdownn_genres = html.Div([
     dcc.Dropdown(
         id='genre-dropdown',
         options=[{'label': genre, 'value': genre} for genre in genres],
-        value=genres[0],
+        value=default_dropdown_value,
         clearable=False
     )
 ])
@@ -54,7 +54,7 @@ layout = dbc.Container([
 
     # Graph 1 : Durée moyenne des films par année
     dbc.Row([
-        html.H3('Durée moyenne des films par année'),
+        html.H3('Durée moyenne des films Netflix par année'),
         html.Label('Genre de film :'),
         dbc.Col([
             dropdownn_genres
@@ -71,7 +71,7 @@ layout = dbc.Container([
 
     # Graph 2 : ?
     dbc.Row([
-        html.H3('?'),
+        html.H3('Genre de films Netflix les plus appréciés'),
     ]),
 ])
 
