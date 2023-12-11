@@ -19,14 +19,20 @@ tvshow = get_tvshow(data_title)
 
 # clean tvshows to get only runtime, years, genres
 tvshow_runtime = tvshow[['title', 'runtime', 'release_year', 'genres']]
+
+# clean tvshows to get only years, genres, tmdb & imdb scores
 tvshow_avg_score = tvshow[['title', 'release_year', 'genres', 'tmdb_score', 'imdb_score']]
+
+# calculates the avg between imdb and tmdb
 for index, show in tvshow_avg_score.iterrows():
     tvshow_avg_score.at[index, 'avg_score'] = (show['tmdb_score'] + show['imdb_score']) / 2
 
 genres = get_unique_genres(data_title)
 genres.insert(0, 'all')
 
+
 ### FORM COMPONENTS ###
+
 default_dropdown_value = genres[0]
 dropdownn_genres = html.Div([
     dcc.Dropdown(
@@ -37,6 +43,7 @@ dropdownn_genres = html.Div([
     )
 ])
 
+# second dropdown for second graph
 dropdown_genres2 = html.Div([
     dcc.Dropdown(
         id='genre-tvshow-dropdown2',
@@ -55,6 +62,7 @@ radios_items = html.Div([
     )
 ])
 
+# second radio buttons for second graph
 radios_items_score = html.Div([
     dbc.RadioItems(
         options=[{"label": x, "value": x} for x in ['Tout afficher', 'IMDb', 'TMDb']],
@@ -63,6 +71,7 @@ radios_items_score = html.Div([
         id='score-tvshow-radio'
     )
 ])
+
 
 ### LAYOUT ###
 
@@ -131,7 +140,7 @@ def update_graph1(col_chosen, selected_genre):
     fig = px.histogram(filtered_data, x='release_year', y='runtime', histfunc='avg')
     return fig
 
-
+# Graph 2 : Score imdb et tmdb pour chaque genre par an
 @callback(
     Output(component_id='graph-tmdb', component_property='figure'),
     [Input(component_id='score-tvshow-radio', component_property='value'),
@@ -143,7 +152,7 @@ def update_graph2(col_chosen, selected_genre):
     else:
         filtered_data = tvshow_avg_score
 
-    # Filtrer par année si nécessaire
+    # Filtrer par imdb ou tmdb, ou la moyenne des deux
     avg_score = 'avg_score'
     if col_chosen == 'IMDb':
         avg_score = 'imdb_score'
