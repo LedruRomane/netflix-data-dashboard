@@ -102,8 +102,8 @@ layout = dbc.Container([
 
     # Graph 2 : Genre les plus appréciés
     dbc.Row([
-        html.H3('Genre de films Netflix les plus appréciés'),
-        html.Label('Genre de la série :'),
+        html.H3('Moyenne des notes des films les plus appréciés par an (source TMDb et IMDb)'),
+        html.Label('Genre de film :'),
             dbc.Col([
                 dropdown_genres2
             ], width=3),
