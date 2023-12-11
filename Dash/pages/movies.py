@@ -69,7 +69,7 @@ layout = dbc.Container([
         ], width=10),
     ]),
 
-    # Graph 2 : ?
+    # Graph 2 : Genre les plus appréciés
     dbc.Row([
         html.H3('Genre de films Netflix les plus appréciés'),
     ]),
