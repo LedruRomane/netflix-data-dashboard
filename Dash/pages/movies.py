@@ -111,11 +111,11 @@ layout = dbc.Container([
                 radios_items_score
             ], width=3),
         ]),
-        dbc.Row([
-            dbc.Col([
-                dcc.Graph(figure={}, id='graph-score')
-            ], width=10),
-        ]),
+    dbc.Row([
+        dbc.Col([
+            dcc.Graph(figure={}, id='graph-score')
+        ], width=10),
+    ]),
 ])
 
 
