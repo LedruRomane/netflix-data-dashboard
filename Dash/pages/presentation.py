@@ -6,6 +6,7 @@ import plotly.express as px
 import pandas as pd
 import ast
 from collections import Counter
+import plotly.graph_objects as go
 
 ### PATH ###
 dash.register_page(
@@ -37,6 +38,7 @@ checkbox_style = {
     'margin': '5px',
     'display': 'inline-block'
 }
+
 
 ### LAYOUT ###
 
@@ -110,6 +112,26 @@ layout = html.Div([
         ),
         dcc.Graph(id='country-pie-chart')
     ], style=style),
+
+    # Graph 3 : Répartition des titres par année avec un slider pour être plus précis
+    dbc.Row([
+        html.H3('Répartition des titres par année'),
+        dcc.Dropdown(
+            id='type-selector-3',
+            options=[
+                {'label': 'Movies', 'value': 'MOVIE'},
+                {'label': 'Shows', 'value': 'SHOW'},
+                {'label': 'Both', 'value': 'BOTH'}
+            ],
+            value='BOTH',  # Valeur par défaut
+            clearable=False
+        ),
+        dcc.Graph(id='year-line'),
+        dcc.RangeSlider(1950, 2023, 10, value=[1980, 2020], id='years-slider', marks={i: '{}'.format(i) for i in range(1950, 2023, 10)}),
+    ], style=style),
+    dbc.Row([
+        html.P('2023 Analyse de données - Projet Netflix', style={'textAlign': 'center'})
+    ], style={'margin': '30px'}),
 ])
 
 ### CALLBACKS ###
@@ -176,5 +198,35 @@ def update_graph(selected_type):
     )
 
     fig.update_traces(textposition='inside', textinfo='percent+label')
+
+    return fig
+
+# Graph 3 : Répartition des titres par année avec un slider pour être plus précis
+@callback(
+    Output('year-line', 'figure'),
+    [Input('type-selector-3', 'value'),
+     Input('years-slider', 'value')]
+)
+def update_graph(selected_type, selected_years):
+    filtered_data = data_title[
+        (data_title['release_year'] >= selected_years[0]) & 
+        (data_title['release_year'] <= selected_years[1])
+    ]
+
+    fig = go.Figure()
+
+    if selected_type == 'BOTH':
+        for t in ['MOVIE', 'SHOW']:
+            type_data = filtered_data[filtered_data['type'] == t]
+            year_count = Counter(type_data['release_year'])
+            labels, values = zip(*sorted(year_count.items()))
+
+            fig.add_trace(go.Scatter(x=labels, y=values, mode='lines', name=t))
+    else:
+        type_data = filtered_data[filtered_data['type'] == selected_type]
+        year_count = Counter(type_data['release_year'])
+        labels, values = zip(*sorted(year_count.items()))
+        fig.add_trace(go.Scatter(x=labels, y=values, mode='lines', name=selected_type))
+
 
     return fig
