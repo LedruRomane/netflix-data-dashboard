@@ -27,7 +27,7 @@
 
 # Pré-ambule
 
-L'application est accessible [ici](http://51.38.178.218:8090/tvshow) (merci à @Romane)
+L'application est accessible [ici](http://51.38.178.218:8090) (merci à @Romane)
 
 ## Etudiants
 
@@ -169,3 +169,46 @@ dtypes: int64(1), object(4)
 
 - Aucune lignes dupliquées.
 - Données nulles gardés pour la plupart des analyses car les champs manquants ne sont pas considérés.
+
+## Analyse des données
+
+### Durée moyenne d'un film ou d'un épisode de série
+
+#### Durée moyenne d'un épisode de séries Netflix par an
+
+Pour certains genre (ex: documentaires), la durée moyenne d'un épisode de série ne varie pratiquement pas au fil des décennies. En revanche, certains genres changent énormément:
+
+- l'animation fait un bond au milieu des années 90. La durée moyenne d'un épisode est presque doublée. On constate une légère baisse autour de 2010 puis une augmentation constante, probablement grâce aux nouvelles technologies.
+
+- Pour tous les autres genres, on voit une augmentation progressive de la durée moyenne d'un épisode, ce qui peut s'expliquer par la généralisation de la télévision dans les foyers puis à partir des années 2010 par l'essort des plateformes de streaming, qui promeuvent en particuliers les séries.
+
+Les séries ont plus de budget et sont plus populaires auprès du grand public. Certaines se rapprochent davantage du court ou moyen métrage. 
+
+#### Durée moyenne des films Netflix par année
+
+La durée moyenne d'un film, à l'inverse, stagne voir semble diminuer.
+
+### Moyenne des notes TMDb et IMDb
+
+A noter :
+
+- Les utilisateurs de Tmdb mettent en moyenne des notes plus élevées que les utilisateurs d'IMDb.
+
+- les pics descendants sur le graphe linéaires correspondent à une absence de données.
+
+#### Moyenne des notes des films les plus appréciés par an
+
+Excepté pour le sport et l'horreur (baisse puis notes constantes après 1996), on constate une baisse générale des notes moyennes attribuées aux films à partir de la fin des années 90.
+Cela peut s'expliquer par l'augmentation du nombre de films produits par an et la multiplicité des spectateurs qui prennent le temps de noter les films.
+
+#### Moyenne des notes des séries les plus appréciés par an (source TMDb et IMDb)
+
+On constate également une baisse générale des notes de séries, même si elle est moins importante que pour les films.
+
+### Evolution de la production de films et séries dans les 10 pays les plus producteurs
+
+Le rendu du graphe n'est pas totalement conforme à ce que nous voulions montrer car la préparation des données pour ce graphe s'est révélée plus complexe que prévu. Le problème principal a été le filtre sur les 10 pays les plus producteurs de films et séries. En effet, chaque titre peut avoir un ou plusieurs pays de production ce qui rend la combinaison avec les années beaucoup plus compliqué car cela génère des tuples plutôt que des identifiant uniques pour chaque titre. Nous ne sommes pas parvenu à résoudre ce problème dans le temps imparti.
+
+Le graphe permet néanmoins de voir l'évolution de la production de films et séries dans la plupart des pays. On voit notamment que les US sont très au-dessus des autres, avec plus de 200 films et séries produits à partir de 2017. Entre 2018 et 2020, cela réprensente une production 3,5 supérieure à celle de l'Inde, 2e du classement. 
+Si on regarde indépendamment la production de films et de séries, on voit que c'est la production de films qui influe le plus sur le classement puisque ce sont les US et l'Inde qui en produisent le plus, avec des nombres bien supérieurs à ceux des autres pays. 
+Les US restent également en tête pour les séries mais les disparités sont moins fortes entre les autres pays. On voit notamment l'émergence des séries Japonaises (Jdrama) et Coréennes (Kdrama), toujours plus populaires auprès du grand public.
