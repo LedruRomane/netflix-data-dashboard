@@ -7,6 +7,36 @@
     </tr>
 </table>
 
+
+1. [Pré-ambule](#preambule)
+2. [Description des jeux de données 📄](#data-sets-description)
+   1. [Fichier des films/séries (`data/titles.csv`)](#movies-series-file)
+   2. [Fichier des acteurs/réalisateurs (`data/credits.csv`)](#actors-directors-file)
+3. [Mise en place de l'environnement](#environment-setup)
+   1. [Pré-requis](#prerequisites)
+   2. [Mise en place de l'environnement virtuel `venv`](#virtual-environment-setup)
+     1. [Création de l'environnement virtuel](#virtual-environment-creation)
+     2. [Source de ce dernier](#environment-source)
+4. [Installation des dépendances du projet](#dependencies-installation)
+5. [Lancer le serveur](#launch-server)
+6. [Troubleshooting](#troubleshooting)
+7. [Informations sur les Dataframe et leurs traitements](#dataframe-information)
+   1. [Titles, les différents shows de la plateforme (film & séries)](#titles-shows)
+   2. [Credits, les acteurs et directeurs des shows](#credits-shows)
+8. [Nettoyage des données](#data-cleaning)
+
+# Pré-ambule
+
+L'application est accessible [ici](http://51.38.178.218:8090/tvshow) (merci à @Romane)
+
+## Etudiants
+
+| Nom                 | Prénom | Numéros Etudiants |
+|---------------------|--------|-------------------|
+| CECILLON            | Enzo   | 11805901          |
+| LEDRU               | Romane | 22105081          |
+| COUTURIER-PETRASSON | Claire | 11710714          |
+
 ## Description des jeux de données 📄
 
 **Aperçu du jeu de données :**
@@ -46,12 +76,12 @@
 
 ## Mise en place de l'environnement
 
-## Pré-requis
+### Pré-requis
 
 - python >= 3.11
 - pip
 
-## Mise en place de l'environnement virtuel `venv` (optionnel mais conseillé)
+### Mise en place de l'environnement virtuel `venv`
 
 [Documentation](https://docs.python.org/3/library/venv.html)
 
@@ -95,7 +125,7 @@ Todo: Créer une page en + pour présenter les données à côté du Dash.
 
 ## Informations sur les Dataframe et leurs traitements
 
-### Titles, les différents shows de la plateforme (film & séries).  (`titles_df`)
+### Titles, les différents shows de la plateforme (film & séries)
 
 ```
 RangeIndex: 5850 entries, 0 to 5849
@@ -120,7 +150,7 @@ Data columns (total 15 columns):
 dtypes: float64(5), int64(2), object(8)
 ```
 
-### Credits, les acteurs et directeurs des shows (`credits_df`)
+### Credits, les acteurs et directeurs des shows
 
 ```
 RangeIndex: 77801 entries, 0 to 77800
@@ -135,7 +165,7 @@ Data columns (total 5 columns):
 dtypes: int64(1), object(4)
 ```
 
-### Nettoyage des données
+## Nettoyage des données
 
 - Aucune lignes dupliquées.
 - Données nulles gardés pour la plupart des analyses car les champs manquants ne sont pas considérés.
