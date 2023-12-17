@@ -227,9 +227,6 @@ def update_graph(selected_type):
     # Filtrer pour les 10 premiers pays
     top_countries = [production_countries for production_countries, count in Counter(countries).most_common(10)]
     filtered_data = [(release_year, production_countries, count) for release_year, production_countries, count in zip(years, countries, counts) if production_countries in top_countries]
-    # print("les années :", years)
-    # print("les countries :", countries)
-    # print("les comptes :", counts)
 
     # Créer le DataFrame pour le graphique
     df = pd.DataFrame(filtered_data, columns=['release_year', 'production_countries', 'count'])
