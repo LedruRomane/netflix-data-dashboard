@@ -10,8 +10,8 @@
 
 2. [Pré-ambule](#pré-ambule)
 3. [Description des jeux de données](#description-des-jeux-de-données-)
-   - [Fichier des films/séries (`data/titles.csv`)](#fichier-des-filmsséries-datatitles.csv)
-   - [Fichier des acteurs/réalisateurs (`data/credits.csv`)](#fichier-des-acteursréalisateurs-datacredits.csv)
+   - [Fichier des films/séries (`data/titles.csv`)](#fichier-des-filmsséries-datatitlescsv)
+   - [Fichier des acteurs/réalisateurs (`data/credits.csv`)](#fichier-des-acteursréalisateurs-datacreditscsv)
 4. [Mise en place de l'environnement](#mise-en-place-de-l'environnement)
    - [Pré-requis](#pré-requis)
    - [Mise en place de l'environnement virtuel `venv`](#mise-en-place-de-l'environnement-virtuel-venv)
@@ -48,7 +48,7 @@ L'application est accessible [ici](http://51.38.178.218:8090/tvshow) (merci à @
 
 | Colonne               | Description de la donnée (Français)                     |
 |-----------------------|---------------------------------------------------------|
-| id                    | L'identifiant du titre sur JustWatch.                   |
+| id                    | L'identifiant du titre                                   |
 | title                 | Le nom du titre.                                        |
 | show_type             | Type de programme : série TV ou film.                   |
 | description           | Une brève description.                                  |
@@ -68,8 +68,8 @@ L'application est accessible [ici](http://51.38.178.218:8090/tvshow) (merci à @
 
 | Colonne         | Description de la donnée (Français)                 |
 |-----------------|-----------------------------------------------------|
-| person_ID       | L'identifiant de la personne sur JustWatch.         |
-| id              | L'identifiant du titre sur JustWatch.               |
+| person_ID       | L'identifiant de la personne.                        |
+| id              | L'identifiant du titre.                              |
 | name            | Le nom de l'acteur ou du réalisateur.               |
 | character_name  | Le nom du personnage.                               |
 | role            | Rôle : ACTEUR ou RÉALISATEUR.                       |
