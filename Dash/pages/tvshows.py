@@ -4,6 +4,8 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
 from data_operations import get_tvshow, get_unique_genres, get_data_title_cleaned
+import plotly.graph_objects as go
+from plotly.graph_objs import Scatter
 
 ### PAGE ###
 
@@ -46,7 +48,7 @@ dropdownn_genres = html.Div([
 # second dropdown for second graph
 dropdown_genres2 = html.Div([
     dcc.Dropdown(
-        id='genre-tvshow-dropdown2',
+        id='dropdown_genres2',
         options=[{'label': genre, 'value': genre} for genre in genres],
         value=default_dropdown_value,
         clearable=False
@@ -61,17 +63,6 @@ radios_items = html.Div([
         id='time-tvshow-radio'
     )
 ])
-
-# second radio buttons for second graph
-radios_items_score = html.Div([
-    dbc.RadioItems(
-        options=[{"label": x, "value": x} for x in ['Tout afficher', 'IMDb', 'TMDb']],
-        value='Tout afficher',
-        inline=True,
-        id='score-tvshow-radio'
-    )
-])
-
 
 ### LAYOUT ###
 
@@ -105,9 +96,6 @@ layout = dbc.Container([
         html.Label('Genre de la série :'),
         dbc.Col([
             dropdown_genres2
-        ], width=3),
-        dbc.Col([
-            radios_items_score
         ], width=3),
     ]),
     dbc.Row([
@@ -143,24 +131,28 @@ def update_graph1(col_chosen, selected_genre):
 # Graph 2 : Score imdb et tmdb pour chaque genre par an
 @callback(
     Output(component_id='graph-tmdb', component_property='figure'),
-    [Input(component_id='score-tvshow-radio', component_property='value'),
-     Input(component_id='genre-tvshow-dropdown2', component_property='value')]
+    Input(component_id='dropdown_genres2', component_property='value')
 )
-def update_graph2(col_chosen, selected_genre):
-    if selected_genre != 'all':
-        filtered_data = tvshow_avg_score[tvshow_avg_score['genres'].apply(lambda x: selected_genre in x)]
+def update_graph_line(selected_genre):
+    if selected_genre == 'all':
+        filtered_data = tvshow
     else:
-        filtered_data = tvshow_avg_score
+        filtered_data = tvshow[tvshow['genres'].str.contains(selected_genre)]
 
-    # Filtrer par imdb ou tmdb, ou la moyenne des deux
-    avg_score = 'avg_score'
-    if col_chosen == 'IMDb':
-        avg_score = 'imdb_score'
-    elif col_chosen == 'TMDb':
-        avg_score = 'tmdb_score'
-    else:
-        avg_score = 'avg_score'        
+    filtered_data = filtered_data[['release_year', 'imdb_score', 'tmdb_score']]
 
-    # Créer le graphique
-    fig = px.histogram(filtered_data, x='release_year', y= avg_score, histfunc='avg')
+    grouped_data = filtered_data.groupby('release_year').mean()
+
+    fig = go.Figure()
+
+    fig.add_trace(Scatter(x=grouped_data.index, y=grouped_data['imdb_score'], mode='lines', name='IMDb Score'))
+    fig.add_trace(Scatter(x=grouped_data.index, y=grouped_data['tmdb_score'], mode='lines', name='TMDB Score'))
+
+    fig.update_layout(
+        title='IMDb and TMDB Scores by Year for Selected Genre',
+        xaxis_title='Year',
+        yaxis_title='Average Score',
+        legend_title='Score Type'
+    )
+
     return fig
