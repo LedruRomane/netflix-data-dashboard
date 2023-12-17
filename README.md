@@ -24,6 +24,7 @@
    - [Titles, les différents shows de la plateforme (film & séries)](#titles-les-différents-shows-de-la-plateforme-film-&-séries)
    - [Credits, les acteurs et directeurs des shows](#credits-les-acteurs-et-directeurs-des-shows)
 9. [Nettoyage des données](#nettoyage-des-données)
+10. [Analyse des données](#analyse-des-données)
 
 # Pré-ambule
 
@@ -181,7 +182,7 @@ Pour certains genre (ex: documentaires), la durée moyenne d'un épisode de sér
 
 - Pour tous les autres genres, on voit une augmentation progressive de la durée moyenne d'un épisode, ce qui peut s'expliquer par la généralisation de la télévision dans les foyers puis à partir des années 2010 par l'essort des plateformes de streaming, qui promeuvent en particuliers les séries.
 
-Les séries ont plus de budget et sont plus populaires auprès du grand public. Certaines se rapprochent davantage du court ou moyen métrage. 
+Les séries ont plus de budget et sont plus populaires auprès du grand public. Certaines se rapprochent davantage du court ou moyen métrage.
 
 #### Durée moyenne des films Netflix par an
 La durée moyenne d'un film, à l'inverse, stagne voir semble diminuer.
@@ -201,6 +202,27 @@ On constate également une baisse générale des notes de séries, même si elle
 ### Evolution de la production de films et séries Netflix dans les 10 pays les plus producteurs
 Le rendu du graphe n'est pas totalement conforme à ce que nous voulions montrer car la préparation des données pour ce graphe s'est révélée plus complexe que prévu. Le problème principal a été le filtre sur les 10 pays les plus producteurs de films et séries. En effet, chaque titre peut avoir un ou plusieurs pays de production ce qui rend la combinaison avec les années beaucoup plus compliqué car cela génère des tuples plutôt que des identifiant uniques pour chaque titre. Nous ne sommes pas parvenu à résoudre ce problème dans le temps imparti.
 
-Le graphe permet néanmoins de voir l'évolution de la production de films et séries dans la plupart des pays. On voit notamment que les US sont très au-dessus des autres, avec plus de 200 films et séries produits à partir de 2017. Entre 2018 et 2020, cela réprensente une production 3,5 supérieure à celle de l'Inde, 2e du classement. 
-Si on regarde indépendamment la production de films et de séries, on voit que c'est la production de films qui influe le plus sur le classement puisque ce sont les US et l'Inde qui en produisent le plus, avec des nombres bien supérieurs à ceux des autres pays. 
+Le graphe permet néanmoins de voir l'évolution de la production de films et séries dans la plupart des pays. On voit notamment que les US sont très au-dessus des autres, avec plus de 200 films et séries produits à partir de 2017. Entre 2018 et 2020, cela réprensente une production 3,5 supérieure à celle de l'Inde, 2e du classement.
+Si on regarde indépendamment la production de films et de séries, on voit que c'est la production de films qui influe le plus sur le classement puisque ce sont les US et l'Inde qui en produisent le plus, avec des nombres bien supérieurs à ceux des autres pays.
 Les US restent également en tête pour les séries mais les disparités sont moins fortes entre les autres pays. On voit notamment l'émergence des séries Japonaises (Jdrama) et Coréennes (Kdrama), toujours plus populaires auprès du grand public.
+
+---
+
+### Corrélation entre la popularité d'un film et la présence d'un acteur
+
+Bien sûr, voici une synthèse de l'analyse que nous avons effectuée sur les données des films et des acteurs :
+
+1. **Acteur le plus prolifique** : Kareena Kapoor Khan s'est avérée être l'actrice ayant joué dans le plus grand nombre de films selon le dataset, avec un total de 25 films.
+
+2. **Corrélation entre la présence d'un acteur et la popularité du film** :
+    - La popularité moyenne des films (mesurée par la popularité sur TMDb) dans lesquels Kareena Kapoor Khan a joué est de 7.68.
+    - Cependant, cette popularité n'est pas parmi les plus élevées comparée à d'autres acteurs. Les acteurs comme RQ, Sin-Ting Huang et Sean Lin figurent au sommet de la liste de popularité, avec des scores dépassant 2200.
+    - Cela indique que la présence d'un acteur spécifique n'est pas un indicateur fiable de la popularité d'un film.
+
+3. **Impact de la présence d'un acteur sur les notes IMDb et TMDb** :
+    - Les notes moyennes IMDb et TMDb des films avec Kareena Kapoor Khan sont respectivement de 6.28 et 6.25, ce qui n'est pas exceptionnellement élevé.
+    - Des acteurs comme Anna Gunn et Zach Tyler figurent en haut de la liste avec des notes IMDb supérieures à 9, tandis que des acteurs comme Wang Herun et Emmanuel Esparza obtiennent des notes parfaites de 10 sur TMDb.
+    - Encore une fois, cela suggère que la présence d'un acteur en particulier n'est pas un garant de notes élevées sur IMDb ou TMDb.
+
+La présence d'un acteur particulier dans un film ne garantit pas nécessairement une popularité ou des notes élevées. Bien que les acteurs populaires et talentueux puissent attirer l'attention sur un film, d'autres facteurs tels que le scénario, la réalisation, le genre du film et la qualité de la production jouent également un rôle crucial dans le succès critique et commercial d'un film.
+Il aurait également été intéressant de pouvoir exploiter le budget alloué à un film pour savoir si le marketting a également eu une influence significative sur le succès du film ...
