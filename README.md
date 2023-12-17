@@ -8,22 +8,22 @@
 </table>
 
 
-1. [Pré-ambule](#preambule)
-2. [Description des jeux de données 📄](#data-sets-description)
-   1. [Fichier des films/séries (`data/titles.csv`)](#movies-series-file)
-   2. [Fichier des acteurs/réalisateurs (`data/credits.csv`)](#actors-directors-file)
-3. [Mise en place de l'environnement](#environment-setup)
-   1. [Pré-requis](#prerequisites)
-   2. [Mise en place de l'environnement virtuel `venv`](#virtual-environment-setup)
-     1. [Création de l'environnement virtuel](#virtual-environment-creation)
-     2. [Source de ce dernier](#environment-source)
-4. [Installation des dépendances du projet](#dependencies-installation)
-5. [Lancer le serveur](#launch-server)
-6. [Troubleshooting](#troubleshooting)
-7. [Informations sur les Dataframe et leurs traitements](#dataframe-information)
-   1. [Titles, les différents shows de la plateforme (film & séries)](#titles-shows)
-   2. [Credits, les acteurs et directeurs des shows](#credits-shows)
-8. [Nettoyage des données](#data-cleaning)
+2. [Pré-ambule](#pré-ambule)
+3. [Description des jeux de données](#description-des-jeux-de-données-)
+   - [Fichier des films/séries (`data/titles.csv`)](#fichier-des-filmsséries-datatitles.csv)
+   - [Fichier des acteurs/réalisateurs (`data/credits.csv`)](#fichier-des-acteursréalisateurs-datacredits.csv)
+4. [Mise en place de l'environnement](#mise-en-place-de-l'environnement)
+   - [Pré-requis](#pré-requis)
+   - [Mise en place de l'environnement virtuel `venv`](#mise-en-place-de-l'environnement-virtuel-venv)
+     - [Création de l'environnement virtuel](#création-de-l'environnement-virtuel)
+     - [Source de ce dernier](#source-de-ce-dernier)
+5. [Installation des dépendances du projet](#installation-des-dépendances-du-projet)
+6. [Lancer le serveur](#lancer-le-serveur)
+7. [Troubleshooting](#troubleshooting)
+8. [Informations sur les Dataframe et leurs traitements](#informations-sur-les-dataframe-et-leurs-traitements)
+   - [Titles, les différents shows de la plateforme (film & séries)](#titles-les-différents-shows-de-la-plateforme-film-&-séries)
+   - [Credits, les acteurs et directeurs des shows](#credits-les-acteurs-et-directeurs-des-shows)
+9. [Nettoyage des données](#nettoyage-des-données)
 
 # Pré-ambule
 
