@@ -1,11 +1,12 @@
 import dash
 import dash_bootstrap_components as dbc
 from dash import Output, Input, html, dcc, callback, dash_table
-from data_operations import get_data_title_cleaned
+from data_operations import get_data_title_cleaned, normalize_df
 import plotly.express as px
 import pandas as pd
 import ast
 from collections import Counter
+import plotly.graph_objects as go
 
 ### PATH ###
 dash.register_page(
@@ -19,6 +20,7 @@ data_title = get_data_title_cleaned()
 number_of_titles = len(data_title.index)
 number_of_movies = len(data_title[data_title['type'] == 'MOVIE'].index)
 number_of_shows = len(data_title[data_title['type'] == 'SHOW'].index)
+normalised_data = normalize_df(get_data_title_cleaned())
 
 ### STYLES ###
 
@@ -37,6 +39,7 @@ checkbox_style = {
     'margin': '5px',
     'display': 'inline-block'
 }
+
 
 ### LAYOUT ###
 
@@ -110,6 +113,79 @@ layout = html.Div([
         ),
         dcc.Graph(id='country-pie-chart')
     ], style=style),
+
+    # Graph 3 : Répartition des titres par année avec un slider pour être plus précis
+    dbc.Row([
+        html.H3('Répartition des titres par année'),
+        dcc.Dropdown(
+            id='type-selector-3',
+            options=[
+                {'label': 'Movies', 'value': 'MOVIE'},
+                {'label': 'Shows', 'value': 'SHOW'},
+                {'label': 'Both', 'value': 'BOTH'}
+            ],
+            value='BOTH',  # Valeur par défaut
+            clearable=False
+        ),
+        dcc.Graph(id='year-line'),
+        dcc.RangeSlider(1950, 2023, 10, value=[1980, 2020], id='years-slider', marks={i: '{}'.format(i) for i in range(1950, 2023, 10)}),
+    ], style=style),
+
+    # Graph 4 : Heatmap 
+    dbc.Row([
+        dbc.Col([
+            html.H3('Heatmap'),
+            html.P('Sélectionnez les champs à afficher :'),
+            dcc.Checklist(
+                id='field-selector',
+                options=[{'label': col, 'value': col} for col in [
+                    'type',
+                    'release_year',
+                    'age_certification',
+                    'runtime',
+                    'genres',
+                    'production_countries',
+                    'seasons',
+                    'imdb_score',
+                    'imdb_votes',
+                    'tmdb_popularity',
+                    'tmdb_score'
+                ]],
+                value=['type',
+                    'runtime',
+                    'imdb_score',
+                    'imdb_votes',
+                    'tmdb_popularity',
+                    'tmdb_score'],  # Toutes les colonnes sont sélectionnées par défaut
+                inline=True,
+                style={
+                    'maxWidth': '600px',
+                    'margin': '20px auto',
+                    'padding': '10px',
+                    'borderRadius': '5px',
+                    'backgroundColor': '#f9f9f9',
+                    'boxShadow': '0 2px 4px rgba(0,0,0,0.1)',
+                    'fontSize': '16px',
+                },
+                inputStyle={
+                    'cursor': 'pointer',
+                    'marginRight': '5px'
+                },
+                labelStyle={
+                    'marginRight': '10px',  # Space out the labels
+                    'cursor': 'pointer',
+                }
+            ),
+        ]),
+        dbc.Col([
+            dcc.Graph(id='heatmap'),
+        ]),
+    ], style=style),
+
+    # Footer
+    dbc.Row([
+        html.P('2023 Analyse de données - Projet Netflix', style={'textAlign': 'center'})
+    ], style={'margin': '30px'}),
 ])
 
 ### CALLBACKS ###
@@ -178,3 +254,44 @@ def update_graph(selected_type):
     fig.update_traces(textposition='inside', textinfo='percent+label')
 
     return fig
+
+# Graph 3 : Répartition des titres par année avec un slider pour être plus précis
+@callback(
+    Output('year-line', 'figure'),
+    [Input('type-selector-3', 'value'),
+     Input('years-slider', 'value')]
+)
+def update_graph(selected_type, selected_years):
+    filtered_data = data_title[
+        (data_title['release_year'] >= selected_years[0]) & 
+        (data_title['release_year'] <= selected_years[1])
+    ]
+
+    fig = go.Figure()
+
+    if selected_type == 'BOTH':
+        for t in ['MOVIE', 'SHOW']:
+            type_data = filtered_data[filtered_data['type'] == t]
+            year_count = Counter(type_data['release_year'])
+            labels, values = zip(*sorted(year_count.items()))
+
+            fig.add_trace(go.Scatter(x=labels, y=values, mode='lines', name=t))
+    else:
+        type_data = filtered_data[filtered_data['type'] == selected_type]
+        year_count = Counter(type_data['release_year'])
+        labels, values = zip(*sorted(year_count.items()))
+        fig.add_trace(go.Scatter(x=labels, y=values, mode='lines', name=selected_type))
+
+
+    return fig
+
+# Graph 4 : Heatmap
+@callback(
+    Output('heatmap', 'figure'),
+    Input('field-selector', 'value')
+)
+def update_heatmap(selected_fields):
+    filtered_data = normalised_data[selected_fields]
+    fig = px.imshow(filtered_data.corr(), text_auto=True, aspect="auto")
+    return fig
+    
