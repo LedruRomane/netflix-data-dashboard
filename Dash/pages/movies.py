@@ -32,9 +32,6 @@ for index, show in movies_avg_score.iterrows():
 genres = get_unique_genres(data_title)
 genres.insert(0, 'all')
 
-genres = get_unique_genres(data_title)
-genres.insert(0, 'all')
-
 ### FORM COMPONENTS ###
 default_dropdown_value = genres[0]
 dropdownn_genres = html.Div([
@@ -100,11 +97,11 @@ layout = dbc.Container([
                 dropdown_genres2
             ], width=3),
         ]),
-        dbc.Row([
-            dbc.Col([
-                dcc.Graph(figure={}, id='graph-score')
-            ], width=10),
-        ]),
+    dbc.Row([
+        dbc.Col([
+            dcc.Graph(figure={}, id='graph-score')
+        ], width=10),
+    ]),
 ])
 
 
