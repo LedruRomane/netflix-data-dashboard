@@ -28,15 +28,7 @@
 
 # Pré-ambule
 
-L'application est accessible [ici](http://51.38.178.218:8090) (merci à @Romane) et sur la forge [ici](https://forge.univ-lyon1.fr/p1805901/analyse-de-donnees-netflix)
-
-## Etudiants
-
-| Nom                 | Prénom | Numéros Etudiants |
-|---------------------|--------|-------------------|
-| CECILLON            | Enzo   | 11805901          |
-| LEDRU               | Romane | 22105081          |
-| COUTURIER-PETRASSON | Claire | 11710714          |
+L'application est accessible [ici](http://51.38.178.218:8090)
 
 ## Description des jeux de données 📄
 
